@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Gin Template API
+  description: A simple Go + Gin server template with basic endpoints
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+
+servers:
+  - url: http://localhost:8080
+    description: Development server
+
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      description: Returns the server health status
+      tags:
+        - Health
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  message:
+                    type: string
+                    example: "Server is healthy"
+
+  /hello:
+    get:
+      summary: Hello World endpoint
+      description: Returns a greeting message
+      tags:
+        - Greeting
+      parameters:
+        - name: name
+          in: query
+          description: Name to greet
+          required: false
+          schema:
+            type: string
+            default: "World"
+            example: "John"
+      responses:
+        '200':
+          description: Greeting message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Hello John!"
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+    
+    GreetingResponse:
+      type: object
+      properties:
+        message:
+          type: string
