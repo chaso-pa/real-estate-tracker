@@ -9,6 +9,34 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("PRISMA_DATABASE_URL")
+}
+
+enum EstateType {
+  USED_HOUSE     @map("used_house") // 中古戸建て
+  NEW_HOUSE      @map("new_house") // 新築戸建て
+  LAND           @map("land") // 土地
+  USED_APARTMENT @map("used_apartment") // 中古マンション
+  NEW_APARTMENT  @map("new_apartment") // 新築マンション
+}
+
+model Estate {
+  id                 Int         @id @default(autoincrement())
+  url                String      @unique
+  address            String?
+  estateType         EstateType? @map("estate_type")
+  value              Int?
+  railway            String?
+  landArea           Float?      @map("land_area")
+  buildingArea       Float?      @map("building_area")
+  floorPlan          String?     @map("floor_plan")
+  yearOfConstruction Int?        @map("year_of_construction")
+  firstAppeared      DateTime?   @map("first_appeared")
+  lastAppeared       DateTime?   @map("last_appeared")
+  createdDate        DateTime?   @map("created_date")
+  createdAt          DateTime    @default(now()) @map("created_at")
+  updatedAt          DateTime    @updatedAt @map("updated_at")
+
+  @@map("estates")
 }
