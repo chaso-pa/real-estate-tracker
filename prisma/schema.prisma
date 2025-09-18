@@ -22,7 +22,7 @@ enum EstateType {
 }
 
 model Estate {
-  id                 Int         @id @default(autoincrement())
+  id                 String      @id @default(cuid())
   url                String      @unique
   address            String?
   estateType         EstateType? @map("estate_type")
@@ -34,7 +34,7 @@ model Estate {
   yearOfConstruction Int?        @map("year_of_construction")
   firstAppeared      DateTime?   @map("first_appeared")
   lastAppeared       DateTime?   @map("last_appeared")
-  createdDate        DateTime?   @map("created_date")
+  createdDate        DateTime?   @map("created_date") @db.Date()
   createdAt          DateTime    @default(now()) @map("created_at")
   updatedAt          DateTime    @updatedAt @map("updated_at")
 

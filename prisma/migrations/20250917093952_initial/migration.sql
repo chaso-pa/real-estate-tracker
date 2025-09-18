@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE `estates` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(191) NOT NULL,
     `url` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NULL,
     `estate_type` ENUM('used_house', 'new_house', 'land', 'used_apartment', 'new_apartment') NULL,
@@ -12,7 +12,7 @@ CREATE TABLE `estates` (
     `year_of_construction` INTEGER NULL,
     `first_appeared` DATETIME(3) NULL,
     `last_appeared` DATETIME(3) NULL,
-    `created_date` DATETIME(3) NULL,
+    `created_date` DATE NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
