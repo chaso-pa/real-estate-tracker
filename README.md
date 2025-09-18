@@ -24,7 +24,7 @@ A modern Go web application template built with the Gin framework, featuring Pri
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd gin-template
+cd real-estate-tracker
 ```
 
 2. Install Go dependencies:

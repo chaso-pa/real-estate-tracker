@@ -5,11 +5,11 @@
 This is a Go web application template using the Gin framework with the following structure:
 
 ```
-gin-template/
+real-estate-tracker/
 ├── api/                    # API specifications
 │   └── openapi.yaml       # OpenAPI/Swagger documentation
 ├── cmd/                   # Application entry points
-│   └── server/           
+│   └── server/
 │       └── main.go       # Main server application
 ├── internal/             # Private application code
 │   ├── handlers/         # HTTP request handlers
