@@ -4,11 +4,15 @@ import (
 	"log"
 	"os"
 
+	"github.com/chaso-pa/real-estate-tracker/internal/routes"
+	"github.com/chaso-pa/real-estate-tracker/internal/utils"
 	"github.com/gin-gonic/gin"
-	"github.com/chaso-pa/gin-template/internal/routes"
 )
 
 func main() {
+	utils.LoadEnv()
+	utils.ConDb()
+
 	// Set Gin mode
 	if os.Getenv("GIN_MODE") == "" {
 		gin.SetMode(gin.DebugMode)
@@ -22,7 +26,8 @@ func main() {
 	r.Use(gin.Recovery())
 
 	// Setup routes
-	routes.SetupStaticRoutes(r)
+	routes.SetupStaticRoutes(r.Group("/"))
+	routes.SetupEstateRoutes(r.Group("/api"))
 
 	// Get port from environment variable or default to 8080
 	port := os.Getenv("PORT")
