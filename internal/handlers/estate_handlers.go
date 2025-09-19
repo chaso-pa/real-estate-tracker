@@ -32,7 +32,7 @@ func CrawlSuumo(c *gin.Context) {
 	}
 	for _, rawUrl := range urls {
 		if err := crawlSuumoUrl(rawUrl); err != nil {
-			log.Printf("Error crawling to %v: %v", url, err)
+			log.Printf("Error crawling to %v: %v", rawUrl, err)
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{
