@@ -1,5 +1,5 @@
 {
-		"name": "gin-template",
+		"name": "real-estate-tracker",
 		"scripts": {
 				"db:init": "prisma init",
 				"db:generate": "prisma generate",
