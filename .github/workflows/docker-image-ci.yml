@@ -16,7 +16,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            dockerhub.chaso-pa.com/cronbase
+            dockerhub.chaso-pa.com/real-estate-tracker
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
