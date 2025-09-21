@@ -1,6 +1,8 @@
 package models
 
 import (
+	"log"
+	"net/url"
 	"time"
 
 	"github.com/chaso-pa/real-estate-tracker/internal/services"
@@ -51,6 +53,13 @@ func EstatesSetValues(estates []*Estate) {
 		estate.LastAppeared = &curTime
 		estate.CreatedDate = &curTime
 		estate.UpdatedAt = curTime
+	}
+}
+
+func SetEstateTypeFromSuumoUrl(estates []*Estate, url string) {
+	et := SuumoUrlToEstateType(url)
+	for _, estate := range estates {
+		estate.EstateType = &et
 	}
 }
 
@@ -120,5 +129,30 @@ func EstatesSchema() *services.JSONSchema {
 			"required":             []string{"estates"},
 			"additionalProperties": false,
 		},
+	}
+}
+
+func SuumoUrlToEstateType(rawUrl string) EstateType {
+	parsedUrl, err := url.Parse(rawUrl)
+	if err != nil {
+		log.Printf("Error parsing URL: %v", err)
+		return "land"
+	}
+	params := parsedUrl.Query()
+	bs := params.Get("bs")
+
+	switch bs {
+	case "010":
+		return "new_apartment"
+	case "011":
+		return "used_apartment"
+	case "020":
+		return "new_house"
+	case "021":
+		return "used_house"
+	case "030":
+		return "land"
+	default:
+		return "land"
 	}
 }
