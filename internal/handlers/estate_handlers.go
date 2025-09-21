@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"net/url"
 	"slices"
 	"sync"
 
@@ -67,7 +66,7 @@ func crawlSuumoUrl(rawUrl string) error {
 				log.Printf("Error marshaling to JSON: %v", err)
 			}
 			messages := []services.Message{
-				{Role: "user", Content: "次の" + urlToEstateType(rawUrl) + "のJSONを解釈してJSONの配列を作成してください" + string(jsonData)},
+				{Role: "user", Content: "次の" + string(models.SuumoUrlToEstateType(rawUrl)) + "のJSONを解釈してJSONの配列を作成してください" + string(jsonData)},
 			}
 			response, err := openai.ChatCompletionWithStructuredOutput(messages, schema, "gpt-5-mini")
 			if err != nil {
@@ -79,34 +78,10 @@ func crawlSuumoUrl(rawUrl string) error {
 				log.Printf("Error unmarshaling to OpenAi Response: %v", err)
 			}
 			models.EstatesSetValues(estateResponse.Estates)
+			models.SetEstateTypeFromSuumoUrl(estateResponse.Estates, rawUrl)
 			models.EstatesUpsert(estateResponse.Estates)
 		}(c)
 	}
 	wg.Wait()
 	return nil
-}
-
-func urlToEstateType(rawUrl string) string {
-	parsedUrl, err := url.Parse(rawUrl)
-	if err != nil {
-		log.Printf("Error parsing URL: %v", err)
-		return ""
-	}
-	params := parsedUrl.Query()
-	bs := params.Get("bs")
-
-	switch bs {
-	case "010":
-		return "new_apartment"
-	case "011":
-		return "used_apartment"
-	case "020":
-		return "new_house"
-	case "021":
-		return "used_house"
-	case "030":
-		return "land"
-	default:
-		return "land"
-	}
 }
