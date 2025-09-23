@@ -27,6 +27,7 @@ func main() {
 
 	// Setup routes
 	routes.SetupStaticRoutes(r.Group("/"))
+	routes.SetupUtilRoutes(r.Group("/util"))
 	routes.SetupEstateRoutes(r.Group("/api"))
 
 	// Get port from environment variable or default to 8080
